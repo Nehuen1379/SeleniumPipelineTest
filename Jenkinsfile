@@ -15,13 +15,13 @@ pipeline {
 
         stage('Instalar dependencias y compilar') {
             steps {
-                sh 'mvn clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Ejecutar pruebas') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
