@@ -1,38 +1,43 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'CUCUMBER_TAGS', defaultValue: '@smoke', description: 'Tags de Cucumber a ejecutar (ej: @login, @regression and not @wip)')
+    }
+
     tools {
-        maven 'Maven 3.8.8'  // Usa el nombre que le diste en Jenkins
-        jdk 'JDK 21'         // O el JDK que estés usando
+        maven 'Maven_3.9.6' // Ajusta según el nombre que configuraste en Jenkins
+        jdk 'JDK_17'         // Ajusta según el JDK configurado
+    }
+
+    environment {
+        MAVEN_OPTS = "-Xmx1024m"
     }
 
     stages {
-        stage('Clonar repositorio') {
-            steps {
-                git url: 'https://github.com/Nehuen1379/SeleniumPipelineTest', branch: 'main'
-            }
-        }
-
-        stage('Instalar dependencias y compilar') {
+        stage('Compilar') {
             steps {
                 bat 'mvn clean compile'
             }
         }
 
-        stage('Ejecutar pruebas') {
+        stage('Ejecutar tests') {
             steps {
-                bat 'mvn test'
+                bat "mvn test -Dcucumber.filter.tags=\"${params.CUCUMBER_TAGS}\""
             }
         }
 
-        stage('Publicar reporte') {
+        stage('Generar reporte') {
             steps {
-                publishHTML(target: [
-                        reportDir: 'target/cucumber-reports',
-                        reportFiles: 'index.html',
-                        reportName: 'Reporte de Pruebas Automatizadas'
-                ])
+                bat 'mvn verify'
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/**/*.*', fingerprint: true
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }

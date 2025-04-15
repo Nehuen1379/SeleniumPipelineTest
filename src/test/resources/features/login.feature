@@ -1,3 +1,4 @@
+@login
 Feature: Login al sistema
 
   Scenario: Usuario se loguea exitosamente
