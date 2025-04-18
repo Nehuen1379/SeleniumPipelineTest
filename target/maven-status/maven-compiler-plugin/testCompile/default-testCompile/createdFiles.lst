@@ -1,0 +1,3 @@
+stepdefinitions\IndexAutomationPracticeSteps.class
+runners\TestRunner.class
+stepdefinitions\LoginSteps.class
