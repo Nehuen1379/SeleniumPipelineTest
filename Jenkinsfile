@@ -30,9 +30,10 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/allure-results/*.*', fingerprint: true
-            allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
+            archiveArtifacts artifacts: 'allure-results/*.*', fingerprint: true
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
+
 
 }
