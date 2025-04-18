@@ -26,12 +26,6 @@ pipeline {
                 bat "mvn test -Dcucumber.filter.tags=\"${params.CUCUMBER_TAGS}\""
             }
         }
-
-        stage('Generar reporte') {
-            steps {
-                bat 'mvn verify'
-            }
-        }
     }
 
     post {
