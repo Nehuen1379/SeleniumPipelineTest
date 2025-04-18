@@ -30,8 +30,9 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/**/*.*', fingerprint: true
-            junit 'target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: 'target/allure-results/*.*', fingerprint: true
+            allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
         }
     }
+
 }
