@@ -30,8 +30,13 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/cucumber-reports/**/*.*', fingerprint: true
-            junit 'target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: 'target/extent-reports/**/*.*', fingerprint: true
+            publishHTML(target: [
+                reportDir: 'target/extent-reports',
+                reportFiles: 'extent-report.html',
+                reportName: 'Extent Report',
+                keepAll: true
+            ])
         }
     }
 
