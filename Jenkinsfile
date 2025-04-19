@@ -30,16 +30,18 @@ pipeline {
 
     post {
         always {
+            // Archivar todos los archivos generados por Extent
             archiveArtifacts artifacts: 'target/extent-reports/**/*.*', fingerprint: true
+
+            // Publicar el reporte de Extent en Jenkins
             publishHTML(target: [
                 reportDir: 'target/extent-reports',
                 reportFiles: 'extent-report.html',
                 reportName: 'Extent Report',
-                keepAll: true
+                keepAll: true,
+                allowMissing: false,
+                alwaysLinkToLastBuild: true
             ])
         }
     }
-
-
-
 }
